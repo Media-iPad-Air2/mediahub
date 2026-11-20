@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>Media Hub</title>
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020617">
+
+<style>
+
+:root{
+    --glass:rgba(255,255,255,.07);
+    --glass-hover:rgba(255,255,255,.11);
+    --border:rgba(255,255,255,.08);
+    --muted:#94a3b8;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+body{
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        sans-serif;
+
+    color:white;
+
+    background:
+        radial-gradient(circle at top right,#2563eb22 0%,transparent 25%),
+        radial-gradient(circle at bottom left,#7c3aed16 0%,transparent 30%),
+        linear-gradient(
+            180deg,
+            #020617 0%,
+            #081229 100%
+        );
+
+    overflow:hidden;
+}
+
+.container{
+
+    height:100vh;
+
+    padding:18px 22px;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+/* CABECERA */
+
+.hero{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:14px;
+}
+
+.greeting{
+
+    color:#e2e8f0;
+
+    font-size:.95rem;
+}
+
+.clock{
+
+    font-size:4.2rem;
+
+    font-weight:700;
+
+    letter-spacing:-4px;
+
+    line-height:.95;
+}
+
+.date{
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:.95rem;
+}
+
+.weather{
+
+    text-align:right;
+}
+
+.temp{
+
+    font-size:2.2rem;
+
+    font-weight:700;
+}
+
+.weather-desc{
+
+    color:#cbd5e1;
+}
+
+/* ACCESOS RAPIDOS */
+
+.quick-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
+    margin-bottom:16px;
+}
+
+.quick-tile{
+
+    background:var(--glass);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    height:84px;
+
+    color:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 8px 20px rgba(0,0,0,.18);
+
+    transition:.2s;
+}
+
+.quick-tile:hover{
+
+    background:var(--glass-hover);
+
+    transform:translateY(-2px);
+}
+
+/* PRINCIPAL */
+
+.media-top{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:16px;
+
+    margin-bottom:16px;
+}
+
+.featured{
+
+    background:var(--glass);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    height:145px;
+
+    text-decoration:none;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 8px 20px rgba(0,0,0,.18);
+
+    transition:.2s;
+}
+
+.featured:hover{
+
+    transform:translateY(-3px);
+}
+
+.media-bottom{
+
+    flex:1;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:16px;
+}
+
+.media-tile{
+
+    background:var(--glass);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    color:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 8px 20px rgba(0,0,0,.18);
+
+    transition:.2s;
+}
+
+.media-tile:hover{
+
+    transform:translateY(-3px);
+}
+
+.icon{
+
+    font-size:2.1rem;
+
+    margin-bottom:8px;
+}
+
+.label{
+
+    font-size:1rem;
+
+    font-weight:600;
+}
+
+.sub{
+
+    color:var(--muted);
+
+    font-size:.82rem;
+
+    margin-top:4px;
+}
+
+.spotify{border-left:4px solid #1DB954;}
+.netflix{border-left:4px solid #E50914;}
+.youtube{border-left:4px solid #FF0000;}
+.prime{border-left:4px solid #00A8E1;}
+.disney{border-left:4px solid #60A5FA;}
+.hue{border-left:4px solid #FACC15;}
+.safari{border-left:4px solid #2563EB;}
+.weather-tile{border-left:4px solid #38BDF8;}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="hero">
+
+        <div>
+
+            <div id="greeting" class="greeting">
+                Buenas tardes
+            </div>
+
+            <div id="clock" class="clock">
+                00:00
+            </div>
+
+            <div id="date" class="date"></div>
+
+        </div>
+
+        <div class="weather">
+
+            <div id="temp" class="temp">
+                --°
+            </div>
+
+            <div id="weatherDesc"
+                 class="weather-desc">
+                 ...
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="quick-grid">
+
+        <a class="quick-tile hue"
+           href="philips-hue://"
+           onclick="abrirApp(event,'philips-hue://','https://www.philips-hue.com')">
+
+            <div class="icon">💡</div>
+            <div class="label">Luces</div>
+
+        </a>
+
+        <a class="quick-tile safari"
+           href="https://www.google.es">
+
+            <div class="icon">🌐</div>
+            <div class="label">Safari</div>
+
+        </a>
+
+        <a class="quick-tile weather-tile"
+           href="weather://weather.apple.com/?lat=39.465&long=-0.461"
+           onclick="abrirApp(event,'weather://weather.apple.com/?lat=39.465&long=-0.461','https://weather.apple.com/?lat=39.465&long=-0.461')">
+
+            <div class="icon">☁️</div>
+            <div class="label">Tiempo</div>
+
+        </a>
+
+    </div>
+
+    <div class="media-top">
+
+        <a class="featured spotify"
+           href="spotify://"
+           onclick="abrirApp(event,'spotify://','https://open.spotify.com')">
+
+            <div class="icon">🎵</div>
+            <div class="label">Spotify</div>
+            <div class="sub">Música</div>
+
+        </a>
+
+        <a class="featured netflix"
+           href="nflx://"
+           onclick="abrirApp(event,'nflx://','https://www.netflix.com')">
+
+            <div class="icon">🎬</div>
+            <div class="label">Netflix</div>
+            <div class="sub">Series y películas</div>
+
+        </a>
+
+    </div>
+
+    <div class="media-bottom">
+
+        <a class="media-tile youtube"
+           href="youtube://"
+           onclick="abrirApp(event,'youtube://','https://youtube.com')">
+
+            <div class="icon">▶️</div>
+            <div class="label">YouTube</div>
+
+        </a>
+
+        <a class="media-tile disney"
+           href="disneyplus://"
+           onclick="abrirApp(event,'disneyplus://','https://www.disneyplus.com')">
+
+            <div class="icon">⭐</div>
+            <div class="label">Disney+</div>
+
+        </a>
+
+        <a class="media-tile prime"
+           href="primevideo://"
+           onclick="abrirApp(event,'primevideo://','https://www.primevideo.com')">
+
+            <div class="icon">📺</div>
+            <div class="label">Prime Video</div>
+
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+function abrirApp(event, appUrl, webUrl){
+
+    event.preventDefault();
+
+    try{
+
+        window.location = appUrl;
+
+        setTimeout(function(){
+
+            window.location = webUrl;
+
+        },1000);
+
+    }
+    catch(e){
+
+        window.location = webUrl;
+
+    }
+
+}
+
+function actualizarReloj(){
+
+    const ahora = new Date();
+
+    const hora = ahora.getHours();
+
+    let saludo = "Buenas noches";
+
+    if(hora >= 6 && hora < 12){
+        saludo = "Buenos días";
+    }
+    else if(hora >= 12 && hora < 20){
+        saludo = "Buenas tardes";
+    }
+
+    document.getElementById("greeting").textContent = saludo;
+
+    document.getElementById("clock").textContent =
+        ahora.toLocaleTimeString(
+            "es-ES",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+    document.getElementById("date").textContent =
+        ahora.toLocaleDateString(
+            "es-ES",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long"
+            }
+        );
+}
+
+async function actualizarTiempo(){
+
+    try{
+
+        const r = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=39.465&longitude=-0.461&current=temperature_2m,weather_code"
+        );
+
+        const data = await r.json();
+
+        document.getElementById("temp").textContent =
+            Math.round(data.current.temperature_2m) + "°";
+
+        let texto = "Despejado";
+
+        const codigo = data.current.weather_code;
+
+        if(codigo >= 1 && codigo <= 3)
+            texto = "Poco nuboso";
+
+        if(codigo >= 45)
+            texto = "Niebla";
+
+        if(codigo >= 51)
+            texto = "Lluvia";
+
+        if(codigo >= 71)
+            texto = "Nieve";
+
+        if(codigo >= 95)
+            texto = "Tormenta";
+
+        document.getElementById(
+            "weatherDesc"
+        ).textContent = texto;
+
+    }
+    catch(e){
+
+        document.getElementById(
+            "weatherDesc"
+        ).textContent = "Sin conexión";
+
+    }
+
+}
+
+actualizarReloj();
+setInterval(actualizarReloj,1000);
+
+actualizarTiempo();
+setInterval(actualizarTiempo,600000);
+
+</script>
+
+</body>
+</html>
